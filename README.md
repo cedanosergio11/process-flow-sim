@@ -1,19 +1,17 @@
-# Process Flow Sim
+# Stasis Dual Choke MPD bench (Process Flow Sim)
 
-Stasis Dual Choke MPD bench — interactive PFD + HMI (`PFD-STA-RIG-01`).
+Interactive PFD training bench — `PFD-STA-RIG-01` / v1.4.2.0.
 
-## Run
+## Highlights
+- Well-control circulating default: exclusive returns to **MGS** (D-6); D-4∧D-5 closed
+- Presets: To flow line, Split returns (warn), meter bypass, rig manifold
+- CK-M service SoT: E-4 ∧ E-5 ∧ M-1 ∧ M-2
+- Bench physics: choke opening ↑ → WHP ↓; FM-01 ≈ pump Qin on meter path
 
-```bash
+Source of truth developed in Grok Projects; this repo is the GitHub twin.
+
+## Dev
+```
 npm install
 npm run dev
 ```
-
-App on http://localhost:8080
-
-## Notes
-
-- Sourced from Grok project Process Flow Sim.
-- P0: dock no longer overlays trend strip; fit-to-view uses content bbox; trends seed from live WHP/FM-01.
-- Cate owns UI chrome. MPGenie owns lineup/physics sign-off.
-- Choke sets WHP; FM-01 tracks pump rate while the path is open.
