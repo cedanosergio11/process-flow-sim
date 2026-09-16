@@ -1,0 +1,40 @@
+name: fix-lock-part15
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-lock-part15.yml'
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix missing m in part 15
+        run: |
+          set -euo pipefail
+          f=.github/restore-payloads/package-lock.json.gz.b64.15
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('.github/restore-payloads/package-lock.json.gz.b64.15')
+          t = p.read_text()
+          old = 'd2tMmLu7o0yCoR'
+          new = 'd2tMmmLu7o0yCoR'
+          assert t.count(old) == 1, t.count(old)
+          t = t.replace(old, new, 1)
+          p.write_text(t)
+          assert len(t) == 4000
+          PY
+          expect=3df8fc5254c634514711dbbc4eeedf3636b62033
+          got=$(git hash-object "$f")
+          echo "got=$got expect=$expect"
+          test "$got" = "$expect"
+      - name: Commit fix and self-delete
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/fix-lock-part15.yml
+          git add .github/restore-payloads/package-lock.json.gz.b64.15
+          git commit -m 'ci: fix package-lock gzip payload part 15 (insert missing m)'
+          git push
