@@ -39,11 +39,11 @@ export const VALVE_META: Record<
     desc: "Isolates Choke A from the outlet header. Must be open for Ck-A service.",
   },
   "C-5": {
-    title: "Equalize / bypass",
+    title: "Equalize / bypass (upper)",
     type: "ball",
     rating: "5K",
     system: "MPD primary",
-    desc: "Crossover between inlet and outlet blocks. Open = choke bypass.",
+    desc: "Upper center equalize between dual-choke cross blocks. Open = choke bypass (peer to C-8).",
   },
   "C-6": {
     title: "Ck-B upstream",
@@ -58,6 +58,13 @@ export const VALVE_META: Record<
     rating: "5K",
     system: "MPD primary",
     desc: "Isolates Choke B from the outlet header. Must be open for Ck-B service.",
+  },
+  "C-8": {
+    title: "Equalize / bypass (lower)",
+    type: "ball",
+    rating: "5K",
+    system: "MPD primary",
+    desc: "Lower center equalize between dual-choke cross blocks (peer to C-5). Open = choke bypass. Not in the Ck-B loop.",
   },
   "D-1": {
     title: "FM-01 inlet",
@@ -342,6 +349,7 @@ export const DEFAULT_VALVES: Record<ValveId, ValveState> = {
   "C-5": "closed",
   "C-6": "closed",
   "C-7": "closed",
+  "C-8": "closed",
   "D-1": "open",
   "D-2": "open",
   "D-3": "closed",
