@@ -1,1 +1,1 @@
-__LOAD__/tmp/push1_content.mjs
+PLACEHOLDER_WILL_REPLACE
