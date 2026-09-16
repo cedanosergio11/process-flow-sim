@@ -1,0 +1,43 @@
+name: restore-grok-pwa-shared
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/grok-pwa-shared.mjs.gz.b64.0"
+      - "scripts/grok-pwa-shared.mjs.gz.b64.1"
+      - ".github/workflows/restore-grok-pwa-shared.yml"
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode exact shared.mjs
+        run: |
+          node <<'NODE'
+          const fs = require("fs");
+          const zlib = require("zlib");
+          const crypto = require("crypto");
+          const b64 =
+            fs.readFileSync("scripts/grok-pwa-shared.mjs.gz.b64.0", "utf8").trim() +
+            fs.readFileSync("scripts/grok-pwa-shared.mjs.gz.b64.1", "utf8").trim();
+          const code = zlib.gunzipSync(Buffer.from(b64, "base64")).toString("utf8");
+          const md5 = crypto.createHash("md5").update(code).digest("hex");
+          if (code.length !== 17665 || md5 !== "53e4f6d4ef4cea9c1b6258585745390e") {
+            throw new Error(`bad decode len=${code.length} md5=${md5}`);
+          }
+          fs.writeFileSync("scripts/grok-pwa-shared.mjs", code);
+          console.log("ok", code.length, md5);
+          NODE
+      - name: Commit restored file
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/grok-pwa-shared.mjs
+          if git diff --cached --quiet; then
+            echo "no change"
+          else
+            git commit -m "fix: restore grok-pwa-shared.mjs contents"
+            git push
+          fi
