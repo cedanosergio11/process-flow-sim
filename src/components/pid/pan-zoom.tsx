@@ -3,10 +3,10 @@ import { useCallback, useEffect, useRef, type PointerEvent as ReactPointerEvent,
 import { Button } from "@/components/ui/button";
 
 /** Ops area bbox (equipment ~60–2320 × 40–1120); title strip is below this band. */
-export const CONTENT_X = 60;
-export const CONTENT_Y = 40;
-export const CONTENT_W = 2260;
-export const CONTENT_H = 1080;
+export const CONTENT_X = 50;
+export const CONTENT_Y = 30;
+export const CONTENT_W = 2220;
+export const CONTENT_H = 1160;
 
 type Vb = { x: number; y: number; w: number; h: number };
 
