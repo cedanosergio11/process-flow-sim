@@ -1,1 +1,1 @@
-PLACEHOLDER_LOAD_FROM_DISK
+file:///tmp/pfs_contents/src__lib__version.ts
