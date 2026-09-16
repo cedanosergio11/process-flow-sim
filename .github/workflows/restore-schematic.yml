@@ -1,0 +1,32 @@
+name: restore-schematic
+on:
+  push:
+    paths:
+      - ".github/restore-payloads/schematic-*.b64"
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode schematic
+        run: |
+          python3 - <<'PY'
+          import base64, gzip, pathlib
+          root = pathlib.Path(".github/restore-payloads")
+          b64 = "".join(p.read_text().strip() for p in sorted(root.glob("schematic-*.b64")))
+          data = gzip.decompress(base64.b64decode(b64))
+          out = pathlib.Path("src/components/pid/schematic.tsx")
+          out.parent.mkdir(parents=True, exist_ok=True)
+          out.write_bytes(data)
+          print("wrote", out, len(data))
+          PY
+      - name: Commit schematic
+        run: |
+          git config user.name "cedanosergio11"
+          git config user.email "cedanosergio11@gmail.com"
+          git add src/components/pid/schematic.tsx
+          if git diff --cached --quiet; then echo "no change"; exit 0; fi
+          git commit -m "fix: restore full schematic hopper-exit PFD"
+          git push
