@@ -329,7 +329,7 @@ function ValvePanel() {
     { title: "Trip tank (T)", ids: ["T-1", "T-2"] },
     { title: "BOP (B)", ids: ["B-1", "B-2", "K-1"] },
     { title: "Rig manifold (M)", ids: ["M-0", "M-1", "M-2", "M-3", "M-4", "M-5", "M-6", "M-7", "M-8"] },
-    { title: "MPD primary (C)", ids: ["C-1", "C-2", "C-3", "C-4", "C-5", "C-6", "C-7"] },
+    { title: "MPD primary (C)", ids: ["C-1", "C-2", "C-3", "C-4", "C-5", "C-6", "C-7", "C-8"] },
     { title: "Discharge / meter (D)", ids: ["D-1", "D-2", "D-3", "D-4", "D-5", "D-6"] },
     { title: "Equalization (E)", ids: ["E-1", "E-2", "E-3", "E-4", "E-5", "E-6"] },
   ];
