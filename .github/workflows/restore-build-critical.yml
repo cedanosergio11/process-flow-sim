@@ -1,0 +1,75 @@
+name: restore-build-critical
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "scripts/grok-pwa-shared.mjs.gz.b64.0"
+      - "scripts/grok-pwa-shared.mjs.gz.b64.1"
+      - "src/components/pid/*.gz.b64"
+      - "src/components/pid/*.gz.b64.*"
+      - ".github/workflows/restore-build-critical.yml"
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode payloads to exact files
+        run: |
+          node <<'JS'
+          const fs = require("fs");
+          const zlib = require("zlib");
+          const crypto = require("crypto");
+          const targets = [
+            {
+              path: "scripts/grok-pwa-shared.mjs",
+              parts: ["scripts/grok-pwa-shared.mjs.gz.b64.0", "scripts/grok-pwa-shared.mjs.gz.b64.1"],
+              len: 17665,
+              md5: "53e4f6d4ef4cea9c1b6258585745390e",
+            },
+            {
+              path: "src/components/pid/equipment.tsx",
+              parts: ["src/components/pid/equipment.tsx.gz.b64"],
+              len: 14345,
+              md5: "ed0235ed4b0cd8c25e0550a1aa2817fb",
+            },
+            {
+              path: "src/components/pid/symbols.tsx",
+              parts: ["src/components/pid/symbols.tsx.gz.b64"],
+              len: 15693,
+              md5: "f173698c158b0eb4fb3cafb6d25a7ba5",
+            },
+            {
+              path: "src/components/pid/schematic.tsx",
+              parts: ["src/components/pid/schematic.tsx.gz.b64.0", "src/components/pid/schematic.tsx.gz.b64.1"],
+              len: 21952,
+              md5: "d4cf4a13b1f2584175f9c319063a2d18",
+            },
+          ];
+          for (const t of targets) {
+            if (!t.parts.every((p) => fs.existsSync(p))) {
+              console.log("skip missing", t.path);
+              continue;
+            }
+            const b64 = t.parts.map((p) => fs.readFileSync(p, "utf8").trim()).join("");
+            const code = zlib.gunzipSync(Buffer.from(b64, "base64")).toString("utf8");
+            const md5 = crypto.createHash("md5").update(code).digest("hex");
+            if (code.length !== t.len || md5 !== t.md5) {
+              throw new Error(`bad ${t.path} len=${code.length} md5=${md5}`);
+            }
+            fs.writeFileSync(t.path, code);
+            console.log("ok", t.path, code.length, md5);
+          }
+          JS
+      - name: Commit restored files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/grok-pwa-shared.mjs src/components/pid/equipment.tsx src/components/pid/symbols.tsx src/components/pid/schematic.tsx || true
+          if git diff --cached --quiet; then
+            echo "no change"
+          else
+            git commit -m "chore: restore pid equipment/schematic/symbols"
+            git push
+          fi
