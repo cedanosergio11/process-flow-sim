@@ -73,7 +73,7 @@ export function stepSim(s: SimState, dt: number): SimState {
   const linedA = pathIn && aUp && aDn;
   const linedB = pathIn && bUp && bDn;
   const linedM = open(s, "E-4") && open(s, "E-5") && open(s, "M-1") && open(s, "M-2");
-  const chokeBypass = pathIn && open(s, "C-5");
+  const chokeBypass = pathIn && (open(s, "C-5") || open(s, "C-8"));
   const killIn = s.template === "kill" && open(s, "E-5") && s4 && open(s, "B-1") && open(s, "K-1");
 
   const cvA = chokeCv(linedA, s.ckA, CV_MAX_AUTO);
