@@ -664,3 +664,169 @@ export function KillFlag({ x, y }: { x: number; y: number }) {
   );
 }
 
+/** Small flow-direction chevron. Tip points along `dir`. */
+export function FlowChevron({
+  x,
+  y,
+  dir = "right",
+}: {
+  x: number;
+  y: number;
+  dir?: "right" | "left" | "up" | "down";
+}) {
+  const pts =
+    dir === "left"
+      ? "0,0 14,-6 14,6"
+      : dir === "up"
+        ? "0,0 -6,14 6,14"
+        : dir === "down"
+          ? "0,0 -6,-14 6,-14"
+          : "0,0 -14,-6 -14,6";
+  return (
+    <polygon
+      points={pts}
+      transform={`translate(${x} ${y})`}
+      className="fill-drawing-line"
+    />
+  );
+}
+
+/** ANSI/ISA S5.1-style instrument bubble (letters only). Field = no bar. */
+export function IsaBubble({
+  x,
+  y,
+  letters,
+  location = "field",
+}: {
+  x: number;
+  y: number;
+  letters: string;
+  location?: "field" | "primary" | "aux";
+}) {
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      <circle r={14} className="fill-drawing-card stroke-drawing-line" strokeWidth={1.4} />
+      {location === "primary" && (
+        <line x1={-14} y1={0} x2={14} y2={0} className="stroke-drawing-line" strokeWidth={1.2} />
+      )}
+      {location === "aux" && (
+        <>
+          <line x1={-14} y1={-2.5} x2={14} y2={-2.5} className="stroke-drawing-line" strokeWidth={1} />
+          <line x1={-14} y1={2.5} x2={14} y2={2.5} className="stroke-drawing-line" strokeWidth={1} />
+        </>
+      )}
+      <text
+        y={4}
+        textAnchor="middle"
+        className="fill-drawing-fg"
+        fontSize={11}
+        fontFamily="var(--font-mono)"
+        fontWeight={600}
+      >
+        {letters}
+      </text>
+    </g>
+  );
+}
+
+export function LineClassTag({
+  x,
+  y,
+  label,
+}: {
+  x: number;
+  y: number;
+  label: string;
+}) {
+  const w = Math.max(48, label.length * 6.4 + 14);
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      <rect
+        x={-w / 2}
+        y={-9}
+        width={w}
+        height={18}
+        rx={2}
+        className="fill-drawing-card stroke-drawing-muted"
+        strokeWidth={1}
+      />
+      <text
+        y={4}
+        textAnchor="middle"
+        className="fill-drawing-muted"
+        fontSize={9}
+        fontFamily="var(--font-mono)"
+        letterSpacing="0.04em"
+      >
+        {label}
+      </text>
+    </g>
+  );
+}
+
+/** Compact on-drawing legend (PFD training HMI — not a full P&ID key). */
+export function DrawingLegend({ x, y }: { x: number; y: number }) {
+  const row = (i: number) => 18 + i * 18;
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      <rect
+        x={0}
+        y={0}
+        width={220}
+        height={128}
+        rx={4}
+        className="fill-drawing-card stroke-drawing-line"
+        strokeWidth={1}
+      />
+      <text x={10} y={14} className="fill-drawing-fg" fontSize={10} fontFamily="var(--font-sans)" fontWeight={600}>
+        Legend
+      </text>
+      {/* open / closed */}
+      <polygon points="10,22 10,34 18,28" className="fill-drawing-card stroke-open" strokeWidth={1.4} />
+      <polygon points="26,22 26,34 18,28" className="fill-drawing-card stroke-open" strokeWidth={1.4} />
+      <text x={34} y={row(0) + 4} className="fill-drawing-fg" fontSize={9} fontFamily="var(--font-sans)">
+        Valve open
+      </text>
+      <polygon points="10,40 10,52 18,46" className="fill-drawing-card stroke-closed" strokeWidth={1.4} />
+      <polygon points="26,40 26,52 18,46" className="fill-drawing-card stroke-closed" strokeWidth={1.4} />
+      <text x={34} y={row(1) + 4} className="fill-drawing-fg" fontSize={9} fontFamily="var(--font-sans)">
+        Valve closed
+      </text>
+      {/* live dash */}
+      <line x1={10} y1={row(2)} x2={40} y2={row(2)} className="stroke-flow pipe-live" strokeWidth={2.2} />
+      <text x={48} y={row(2) + 4} className="fill-drawing-fg" fontSize={9} fontFamily="var(--font-sans)">
+        Live flow
+      </text>
+      {/* hose vs hard */}
+      <line
+        x1={10}
+        y1={row(3)}
+        x2={40}
+        y2={row(3)}
+        className="stroke-drawing-line"
+        strokeWidth={2}
+        strokeDasharray="3 3"
+      />
+      <text x={48} y={row(3) + 4} className="fill-drawing-fg" fontSize={9} fontFamily="var(--font-sans)">
+        Hose (flex)
+      </text>
+      <line x1={10} y1={row(4)} x2={40} y2={row(4)} className="stroke-drawing-line" strokeWidth={2.4} />
+      <text x={48} y={row(4) + 4} className="fill-drawing-fg" fontSize={9} fontFamily="var(--font-sans)">
+        Hard pipe
+      </text>
+      {/* jump */}
+      <path
+        d="M 10 108 A 8 8 0 0 1 26 108"
+        fill="none"
+        className="stroke-drawing-line"
+        strokeWidth={1.6}
+      />
+      <text x={34} y={row(5) + 4} className="fill-drawing-fg" fontSize={9} fontFamily="var(--font-sans)">
+        Jump (no connect)
+      </text>
+      <text x={120} y={row(0) + 4} className="fill-drawing-muted" fontSize={9} fontFamily="var(--font-sans)">
+        Dim line = WC/Kill mute
+      </text>
+    </g>
+  );
+}

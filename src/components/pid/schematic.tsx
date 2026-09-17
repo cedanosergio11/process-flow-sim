@@ -3,11 +3,15 @@ import {
   ArrowFlag,
   CrossBlock,
   DrawingDefs,
+  DrawingLegend,
+  FlowChevron,
   Hose,
   hoseZigzagD,
   Instrument,
+  IsaBubble,
   IsaValve,
   KillFlag,
+  LineClassTag,
   Pipe,
   PipeJump,
   ProcessChoke,
@@ -277,6 +281,8 @@ export function Schematic() {
         points={`${KILL_X},${HANG_Y + 30} ${KILL_X - 6},${HANG_Y + 20} ${KILL_X + 6},${HANG_Y + 20}`}
         className="fill-drawing-line"
       />
+      <FlowChevron x={KILL_X} y={SPOOL_Y - 80} dir="down" />
+      <FlowChevron x={KILL_X + 40} y={SPOOL_Y} dir="right" />
 
       <Pipe d={`M 235 ${SP_Y} L 235 ${HANG_Y - 18}`} live={false} />
       <Pipe d={`M 235 ${HANG_Y + 18} L 235 ${HANG_Y + 36}`} live={false} />
@@ -326,23 +332,21 @@ export function Schematic() {
       <PipeJump x={MGS_OUT_DROP_X} y={MGS_IN_Y} axis="v" live={flLive && v("F-3")} />
       <ArrowFlag x={FL_X + 300} y={F3_Y} label="MGS to FL" dir="left" />
       {/* Explicit flow chevrons: lateral toward FL, then up the riser to F-2 / F-1 */}
-      <polygon
-        points={`${FL_X + 200},${F3_Y} ${FL_X + 214},${F3_Y - 6} ${FL_X + 214},${F3_Y + 6}`}
-        className="fill-drawing-line"
-      />
-      <polygon
-        points={`${FL_X},${F3_Y - 36} ${FL_X - 6},${F3_Y - 22} ${FL_X + 6},${F3_Y - 22}`}
-        className="fill-drawing-line"
-      />
+      <FlowChevron x={FL_X + 200} y={F3_Y} dir="left" />
+      <FlowChevron x={FL_X} y={F3_Y - 36} dir="up" />
+      <SpecBreak x={FL_X + 160} y={F3_Y} />
 
       {/* FL → MGS (F-4) */}
       <Pipe d={`M ${FL_X} ${F4_Y} L ${FL_X + 40} ${F4_Y}`} live={v("F-4")} />
       <Pipe d={`M ${FL_X + 76} ${F4_Y} L ${MGS_X - 48} ${F4_Y}`} live={v("F-4")} />
       <Tee x={FL_X} y={F4_Y} />
       <ArrowFlag x={FL_X + 300} y={F4_Y} label="FL to MGS" dir="right" />
+      <FlowChevron x={FL_X + 220} y={F4_Y} dir="right" />
+      <SpecBreak x={FL_X + 160} y={F4_Y} />
 
       {/* D-4 / D-5 returns-to-FL corridor */}
       <Pipe d={`M ${FL_X + 136} ${F5_Y} L ${FL_X} ${F5_Y}`} live={toFlLive && v("F-5")} />
+      <FlowChevron x={FL_X + 70} y={F5_Y} dir="left" />
       <SpecBreak x={FL_X + 100} y={F5_Y} />
       <Pipe d={`M ${d4 - 18} ${F5_Y} L ${FL_X + 174} ${F5_Y}`} live={toFlLive} />
       <Pipe d={`M ${DROP_X} ${RET_Y} L ${DROP_X} ${F5_Y} L ${d4 + 18} ${F5_Y}`} live={toFlLive} />
@@ -389,6 +393,7 @@ export function Schematic() {
         size="fill"
       />
       <SpecBreak x={FILL_X} y={FILL_Y - 112} rotation={90} />
+      <LineClassTag x={FILL_X + 42} y={FILL_Y - 70} label="FILL-UP" />
       <Pipe d={`M ${FILL_X} ${FILL_Y - 78} L ${FILL_X} ${FILL_Y - 36}`} live={fillLive} size="fill" />
       <Pipe
         d={`M ${FILL_X} ${FILL_Y - 2} L ${FILL_X} ${FILL_Y} L ${FILL_NOZ - 108} ${FILL_Y}`}
@@ -402,6 +407,10 @@ export function Schematic() {
       <Pipe d={`M ${RET_X} ${RET_Y} L ${C1_X - 18} ${RET_Y}`} live={retLive} />
       <Pipe d={`M ${C1_X + 18} ${RET_Y} L ${E4_X - 18} ${RET_Y}`} live={primLive} />
       <Pipe d={`M ${E4_X + 18} ${RET_Y} L ${LX - 11} ${RET_Y}`} live={primLive} />
+      <FlowChevron x={C1_X + 90} y={RET_Y} dir="right" />
+      <FlowChevron x={(E4_X + LX) / 2} y={RET_Y} dir="right" />
+      <LineClassTag x={(RET_X + C1_X) / 2} y={RET_Y - 22} label="5K RET" />
+      <LineClassTag x={CK_MID_X} y={CK_A_Y - 36} label="10K CK" />
 
       {/* Dual choke Visio 2×2 CrossBlocks */}
       <CrossBlock x={LX} y={CK_TOP_Y} />
@@ -443,10 +452,13 @@ export function Schematic() {
 
       {/* Dual choke outlet → FM-01 */}
       <Pipe d={`M ${RX + 11} ${RET_Y} L ${d1 - 11} ${RET_Y}`} live={outLive} />
+      <FlowChevron x={RX + 80} y={RET_Y} dir="right" />
+      <SpecBreak x={(RX + d1) / 2} y={RET_Y} />
       <CrossBlock x={d1} y={RET_Y} />
       <CrossBlock x={d2} y={RET_Y} />
 
       {/* FM meter loop (D-1 / D-2 above) + D-3 bypass on RET_Y */}
+      <SpecBreak x={d1} y={(RET_Y + FM_LOOP_Y) / 2} rotation={90} />
       <Pipe d={`M ${d1} ${RET_Y - 11} L ${d1} ${FM_LOOP_Y + 18}`} live={outLive} />
       <Pipe d={`M ${d1} ${FM_LOOP_Y - 18} L ${d1} ${FM_LOOP_Y} L ${d1 + 52} ${FM_LOOP_Y}`} live={meterLive} />
       <Pipe d={`M ${d2 - 52} ${FM_LOOP_Y} L ${d2} ${FM_LOOP_Y} L ${d2} ${FM_LOOP_Y - 18}`} live={meterLive} />
@@ -458,10 +470,13 @@ export function Schematic() {
       <Pipe d={`M ${d3 + 18} ${RET_Y} L ${d2 - 11} ${RET_Y}`} live={bypLive} />
       <Pipe d={`M ${d2 + 11} ${RET_Y} L ${DROP_X} ${RET_Y}`} live={outLive} />
       <Pipe d={`M ${DROP_X} ${RET_Y} L ${d6 - 18} ${RET_Y}`} live={mgsLive} />
+      <FlowChevron x={(DROP_X + d6) / 2} y={RET_Y} dir="right" />
       <Pipe
         d={`M ${d6 + 18} ${RET_Y} L ${MGS_X - 78} ${RET_Y} L ${MGS_X - 78} ${MGS_IN_Y} L ${MGS_X - 48} ${MGS_IN_Y}`}
         live={mgsLive}
       />
+      <FlowChevron x={MGS_X - 100} y={RET_Y} dir="right" />
+      <FlowChevron x={MGS_X - 78} y={(RET_Y + MGS_IN_Y) / 2} dir="down" />
 
       {/* Flare stack */}
       <Pipe d={`M ${MGS_X + 8} 182 L ${MGS_X + 8} 48`} live={false} />
@@ -494,6 +509,7 @@ export function Schematic() {
       {/* E-4 drop with Visio hose zigzag into E-6 / E-5 */}
       <Tee x={E4_X} y={RET_Y} />
       <Pipe d={`M ${E4_X} ${RET_Y + 18} L ${E4_X} ${RET_Y + 55}`} live={primLive && v("E-4")} />
+      <SpecBreak x={E4_X} y={RET_Y + 55} rotation={90} />
       <Hose
         d={hoseZigzagD(E4_X, RET_Y + 55, E4_X, E5B_Y - 8, 8, 15)}
         live={primLive && v("E-4")}
@@ -527,6 +543,7 @@ export function Schematic() {
         selected={selected?.kind === "pump" && selected.id === "T3"}
         onClick={() => togglePump("T3")}
       />
+      <IsaBubble x={460} y={52} letters="PI" location="field" />
       <SppRead x={505} y={52} live={pumpsLive} />
 
       <WellControlStack
@@ -602,7 +619,10 @@ export function Schematic() {
         )}
       </g>
 
+      <IsaBubble x={C1_X - 118} y={RET_Y + 48} letters="PI" location="field" />
       <WhpRead x={C1_X - 80} y={RET_Y + 48} />
+      <IsaBubble x={FM_CX - 48} y={FM_LOOP_Y - 62} letters="FT" location="field" />
+      <IsaBubble x={FM_CX - 48} y={FM_LOOP_Y - 34} letters="FI" location="field" />
       <FmRead x={FM_CX} y={FM_LOOP_Y - 62} live={meterLive} />
 
       <g transform={`translate(${MAN_DX} ${MAN_DY})`}>
@@ -614,6 +634,7 @@ export function Schematic() {
         />
       </g>
 
+      <DrawingLegend x={36} y={SHEET_H - 188} />
       <rect
         x={24}
         y={SHEET_H - 44}
