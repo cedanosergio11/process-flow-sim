@@ -1,13 +1,6 @@
 name: restore-build-critical
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - "scripts/grok-pwa-shared.mjs.gz.b64.0"
-      - "scripts/grok-pwa-shared.mjs.gz.b64.1"
-      - "src/components/pid/*.gz.b64"
-      - "src/components/pid/*.gz.b64.*"
-      - ".github/workflows/restore-build-critical.yml"
 jobs:
   restore:
     runs-on: ubuntu-latest
@@ -37,14 +30,14 @@ jobs:
             {
               path: "src/components/pid/symbols.tsx",
               parts: ["src/components/pid/symbols.tsx.gz.b64"],
-              len: 17420,
-              md5: "9ec6733be9d6b58aa10133d3e0b3eefc",
+              len: 22269,
+              md5: "71cef28c679e2947c9e9ea45fccf9c12",
             },
             {
               path: "src/components/pid/schematic.tsx",
               parts: ["src/components/pid/schematic.tsx.gz.b64.0", "src/components/pid/schematic.tsx.gz.b64.1"],
-              len: 26856,
-              md5: "a0feb9ba3aeaf09310b7c46a716add20",
+              len: 28176,
+              md5: "e117a60535d03cdb98cfbbd1139423a8",
             },
           ];
           for (const t of targets) {
@@ -64,12 +57,12 @@ jobs:
           JS
       - name: Commit restored files
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "cedanosergio11"
+          git config user.email "cedanosergio11@gmail.com"
           git add scripts/grok-pwa-shared.mjs src/components/pid/equipment.tsx src/components/pid/symbols.tsx src/components/pid/schematic.tsx || true
           if git diff --cached --quiet; then
             echo "no change"
           else
-            git commit -m "fix: restore equipment/symbols after stale gz overwrite (keep F-3 schematic)"
+            git commit -m "feat(pid): ISA bubbles, flow chevrons, line-class tags, drawing legend (Cate)"
             git push
           fi
