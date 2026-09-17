@@ -12,7 +12,7 @@ Visio topology restored (was mid-rail CrossBlocks only):
 ```
         C-3 ↑    Chk A    ↑ C-4
        [TL]────── C-5 ──────[TR]     ← upper equalize rail
-         │  inlet@RET_Y mid-spine  │
+         │  inlet@RET_Y  │
        [BL]────── C-8 ──────[BR]     ← lower equalize rail (peer to C-5)
         C-6 ↓    Chk B    ↓ C-7
 ```
@@ -80,3 +80,15 @@ Optional future sim nicety (not done): dedicated `choke-bypass` LiveSegment so e
 - `src/components/pid/equipment.tsx` — MGS nozzle Y
 - `src/components/pid/pan-zoom.tsx` — CONTENT_* bbox
 - `FULL_REDRAW_NOTES.md` — this file
+
+## PFD training HMI pass (2026-09-17 CT) — Lucid/PIC001 frame
+
+Still a PFD / training HMI (`PFD-STA-RIG-01`), not a construction P&ID.
+
+1. **Flow chevrons** on primary paths: returns (C-1→chokes→FM→D-6→MGS), kill drop, FL↔MGS laterals, D-5→FL. MGS→F-3 uses `FlowChevron` (path order already MGS→FL).
+2. **DrawingLegend** (bottom-left): open/closed, live dash, hose vs hard pipe, jump, WC/Kill mute note.
+3. **ISA S5.1 bubbles** (field): WHP=`PI`, SPP=`PI`, FM-01=`FT`+`FI` beside existing numeric chips. No new ValveId / LiveSegment.
+4. **LineClassTag**: `5K RET`, `10K CK`, `FILL-UP`.
+5. **SpecBreak** consistency: F-3/F-4 laterals, E-4 hose drop, meter riser (D-1), existing FL/F-5/fill marks kept.
+
+Skipped: root valves, tubing, every elbow/tee, dense P/T tables, inventing manifold ValveIds.
