@@ -31,14 +31,14 @@ jobs:
             {
               path: "src/components/pid/equipment.tsx",
               parts: ["src/components/pid/equipment.tsx.gz.b64"],
-              len: 14345,
-              md5: "ed0235ed4b0cd8c25e0550a1aa2817fb",
+              len: 14422,
+              md5: "0a261150a3bd031163ab9860eac2130c",
             },
             {
               path: "src/components/pid/symbols.tsx",
               parts: ["src/components/pid/symbols.tsx.gz.b64"],
-              len: 15693,
-              md5: "f173698c158b0eb4fb3cafb6d25a7ba5",
+              len: 17420,
+              md5: "9ec6733be9d6b58aa10133d3e0b3eefc",
             },
             {
               path: "src/components/pid/schematic.tsx",
@@ -70,6 +70,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "no change"
           else
-            git commit -m "fix: MGS→FL (F-3) dash direction hopper→FL + chevrons; valve tag offsets"
+            git commit -m "fix: restore equipment/symbols after stale gz overwrite (keep F-3 schematic)"
             git push
           fi
