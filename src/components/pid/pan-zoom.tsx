@@ -2,11 +2,11 @@ import { Minus, Plus, Scan } from "lucide-react";
 import { useCallback, useEffect, useRef, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 
-/** Ops area bbox (equipment ~60–2320 × 40–1120); title strip is below this band. */
-export const CONTENT_X = 50;
-export const CONTENT_Y = 30;
-export const CONTENT_W = 2220;
-export const CONTENT_H = 1160;
+/** Ops area bbox — full Visio-faithful sheet (pumps→MGS, FL→manifold). */
+export const CONTENT_X = 40;
+export const CONTENT_Y = 24;
+export const CONTENT_W = 2380;
+export const CONTENT_H = 1280;
 
 type Vb = { x: number; y: number; w: number; h: number };
 
