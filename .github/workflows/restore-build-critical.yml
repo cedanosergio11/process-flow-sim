@@ -43,8 +43,8 @@ jobs:
             {
               path: "src/components/pid/schematic.tsx",
               parts: ["src/components/pid/schematic.tsx.gz.b64.0", "src/components/pid/schematic.tsx.gz.b64.1"],
-              len: 21952,
-              md5: "d4cf4a13b1f2584175f9c319063a2d18",
+              len: 26856,
+              md5: "a0feb9ba3aeaf09310b7c46a716add20",
             },
           ];
           for (const t of targets) {
@@ -70,6 +70,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "no change"
           else
-            git commit -m "chore: restore pid equipment/schematic/symbols"
+            git commit -m "fix: MGS→FL (F-3) dash direction hopper→FL + chevrons; valve tag offsets"
             git push
           fi
