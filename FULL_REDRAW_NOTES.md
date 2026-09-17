@@ -92,3 +92,5 @@ Still a PFD / training HMI (`PFD-STA-RIG-01`), not a construction P&ID.
 5. **SpecBreak** consistency: F-3/F-4 laterals, E-4 hose drop, meter riser (D-1), existing FL/F-5/fill marks kept.
 
 Skipped: root valves, tubing, every elbow/tee, dense P/T tables, inventing manifold ValveIds.
+
+<!-- pages-retrigger: Cate ISA UI on main -->
