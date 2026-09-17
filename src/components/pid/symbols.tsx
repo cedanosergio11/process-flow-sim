@@ -522,90 +522,16 @@ export function ArrowFlag({
   );
 }
 
-/** Build an orthogonal zigzag hose path between two axis-aligned points. */
-export function hoseZigzagD(
-  x1: number,
-  y1: number,
-  x2: number,
-  y2: number,
-  amp = 9,
-  period = 16,
-): string {
-  const dx = x2 - x1;
-  const dy = y2 - y1;
-  const len = Math.hypot(dx, dy);
-  if (len < 1) return `M ${x1} ${y1}`;
-  const vertical = Math.abs(dx) < Math.abs(dy);
-  const steps = Math.max(2, Math.round(len / period));
-  const parts: string[] = [`M ${x1} ${y1}`];
-  for (let i = 1; i <= steps; i++) {
-    const t = i / steps;
-    const px = x1 + dx * t;
-    const py = y1 + dy * t;
-    const side = i % 2 === 0 ? amp : -amp;
-    if (vertical) parts.push(`L ${px + side} ${py}`);
-    else parts.push(`L ${px} ${py + side}`);
-  }
-  parts.push(`L ${x2} ${y2}`);
-  return parts.join(" ");
-}
-
 export function Hose({
   d,
   live = false,
   size = "main",
-  muted = false,
 }: {
   d: string;
   live?: boolean;
   size?: PipeSize;
-  muted?: boolean;
 }) {
-  return <Pipe d={d} live={live} size={size} muted={muted} />;
-}
-
-/** Semicircle jump where two pipes cross without connecting. */
-export function PipeJump({
-  x,
-  y,
-  axis = "h",
-  r = 9,
-  live = false,
-  size = "main",
-}: {
-  x: number;
-  y: number;
-  axis?: "h" | "v";
-  r?: number;
-  live?: boolean;
-  size?: PipeSize;
-}) {
-  const w = PIPE_W[size];
-  const d =
-    axis === "h"
-      ? `M ${x - r} ${y} A ${r} ${r} 0 0 1 ${x + r} ${y}`
-      : `M ${x} ${y - r} A ${r} ${r} 0 0 1 ${x} ${y + r}`;
-  return (
-    <g className="pointer-events-none">
-      <path
-        d={d}
-        fill="none"
-        className="stroke-drawing-line"
-        strokeWidth={w}
-        strokeLinecap="butt"
-      />
-      {live && (
-        <path
-          d={d}
-          fill="none"
-          className="stroke-flow pipe-live"
-          strokeWidth={2.2}
-          strokeLinecap="butt"
-          vectorEffect="non-scaling-stroke"
-        />
-      )}
-    </g>
-  );
+  return <Pipe d={d} live={live} size={size} />;
 }
 
 export function SpecBreak({ x, y, rotation = 0 }: { x: number; y: number; rotation?: number }) {
@@ -663,4 +589,5 @@ export function KillFlag({ x, y }: { x: number; y: number }) {
     </g>
   );
 }
+
 

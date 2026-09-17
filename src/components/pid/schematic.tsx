@@ -102,23 +102,23 @@ const BASE_POS: Record<
 > = {
   "C-1": { x: C1_X, y: RET_Y, tagY: 32 },
   "C-2": { x: FL_X, y: BOP_Y - 100, rot: 90, tagX: 26, tagY: 4 },
-  "C-3": { x: LX, y: C3_Y, rot: 90, tagX: 22, tagY: 4 },
-  "C-4": { x: RX, y: C4_Y, rot: 90, tagX: 22, tagY: 4 },
-  "C-5": { x: CK_MID_X, y: CK_TOP_Y, tagY: -16 },
-  "C-6": { x: LX, y: C6_Y, rot: 90, tagX: 22, tagY: 4 },
-  "C-7": { x: RX, y: C7_Y, rot: 90, tagX: 22, tagY: 4 },
-  "C-8": { x: CK_MID_X, y: CK_BOT_Y, tagY: -14 },
+  "C-3": { x: LX, y: C3_Y, rot: 90, tagX: -28, tagY: 4 },
+  "C-4": { x: RX, y: C4_Y, rot: 90, tagX: 28, tagY: 4 },
+  "C-5": { x: CK_MID_X, y: CK_TOP_Y, tagY: -28 },
+  "C-6": { x: LX, y: C6_Y, rot: 90, tagX: -28, tagY: 4 },
+  "C-7": { x: RX, y: C7_Y, rot: 90, tagX: 28, tagY: 4 },
+  "C-8": { x: CK_MID_X, y: CK_BOT_Y, tagY: 28 },
   "D-1": { x: FM_CX - 90, y: FM_LOOP_Y, rot: 90, tagX: -22, tagY: 4 },
   "D-2": { x: FM_CX + 90, y: FM_LOOP_Y, rot: 90, tagX: 22, tagY: 4 },
   "D-3": { x: FM_CX, y: RET_Y, tagY: 18 },
-  "D-4": { x: FM_CX + 185, y: F5_Y, tagY: -16 },
-  "D-5": { x: FL_X + 155, y: F5_Y, tagY: 20 },
+  "D-4": { x: FM_CX + 185, y: F5_Y, tagY: -22 },
+  "D-5": { x: FL_X + 155, y: F5_Y, tagX: 36, tagY: -18 },
   "D-6": { x: FM_CX + 270, y: RET_Y, tagY: 18 },
   "E-1": { x: FILL_NOZ - 90, y: FILL_Y, size: "fill", tagY: 30 },
   "E-2": { x: FILL_X, y: FILL_Y - 18, rot: 90, size: "fill", tagX: 24, tagY: 4 },
   "E-3": { x: FILL_X, y: FILL_Y - 95, rot: 90, size: "fill", tagX: 24, tagY: 4 },
   "E-4": { x: E4_X, y: RET_Y, tagY: -16 },
-  "E-6": { x: E5_X, y: E5B_Y, rot: 90, tagX: 22, tagY: 4 },
+  "E-6": { x: E5_X, y: E5B_Y, rot: 90, tagX: -30, tagY: 4 },
   "S-1": { x: 215, y: SP_Y, tagY: 28 },
   "S-2": { x: 325, y: SP_Y, tagY: 28 },
   "S-3": { x: 395, y: SP_Y, tagY: -18 },
@@ -126,26 +126,26 @@ const BASE_POS: Record<
   "S-5": { x: 235, y: HANG_Y, rot: 90, tagX: 22, tagY: 4 },
   "S-6": { x: 335, y: HANG_Y, rot: 90, tagX: 22, tagY: 4 },
   "S-7": { x: 475, y: SP_Y, tagY: -18 },
-  "F-1": { x: FL_X, y: 88, rot: 90, tagX: 22, tagY: 4 },
-  "F-2": { x: FL_X, y: 124, rot: 90, tagX: 22, tagY: 4 },
-  "F-3": { x: FL_X + 58, y: F3_Y, tagY: 22 },
-  "F-4": { x: FL_X + 58, y: F4_Y, tagY: 22 },
-  "F-5": { x: FL_X + 58, y: F5_Y, tagY: -16 },
-  "F-6": { x: FL_X + 118, y: F5_Y, tagY: 22 },
+  "F-1": { x: FL_X, y: 88, rot: 90, tagX: 28, tagY: 4 },
+  "F-2": { x: FL_X, y: 124, rot: 90, tagX: -28, tagY: 4 },
+  "F-3": { x: FL_X + 58, y: F3_Y, tagY: -20 },
+  "F-4": { x: FL_X + 58, y: F4_Y, tagX: -42, tagY: 4 },
+  "F-5": { x: FL_X + 58, y: F5_Y, tagY: -22 },
+  "F-6": { x: FL_X + 118, y: F5_Y, tagY: 26 },
   "T-1": { x: 505, y: TT_Y, size: "fill", tagY: 28 },
   "T-2": { x: FILL_X, y: TT_Y, size: "fill", tagY: 28 },
   "B-1": { x: BOP_X - 86, y: SPOOL_Y, tagY: 28 },
   "B-2": { x: BOP_X + 86, y: SPOOL_Y, tagY: 28 },
   "K-1": { x: KILL_X + 90, y: SPOOL_Y, tagY: -16 },
-  "M-0": { x: E5_X, y: E5_Y, tagY: 32 },
-  "M-1": { x: 748 + MAN_DX, y: 688 + MAN_DY, tagY: -16 },
-  "M-2": { x: 890 + MAN_DX, y: 688 + MAN_DY, tagY: -16 },
+  "M-0": { x: E5_X, y: E5_Y, tagX: -36, tagY: 28 },
+  "M-1": { x: 748 + MAN_DX, y: 688 + MAN_DY, tagY: -24 },
+  "M-2": { x: 890 + MAN_DX, y: 688 + MAN_DY, tagY: -24 },
   "M-3": { x: 748 + MAN_DX, y: 752 + MAN_DY, tagY: 28 },
   "M-4": { x: 890 + MAN_DX, y: 752 + MAN_DY, tagY: 28 },
-  "M-5": { x: 1040 + MAN_DX, y: 676 + MAN_DY, tagY: -14 },
-  "M-6": { x: 1040 + MAN_DX, y: 706 + MAN_DY, tagY: -14 },
-  "M-7": { x: 1040 + MAN_DX, y: 736 + MAN_DY, tagY: 18 },
-  "M-8": { x: 1040 + MAN_DX, y: 766 + MAN_DY, tagY: 18 },
+  "M-5": { x: 1040 + MAN_DX, y: 676 + MAN_DY, tagX: 36, tagY: -4 },
+  "M-6": { x: 1040 + MAN_DX, y: 706 + MAN_DY, tagX: -36, tagY: -4 },
+  "M-7": { x: 1040 + MAN_DX, y: 736 + MAN_DY, tagX: 36, tagY: 4 },
+  "M-8": { x: 1040 + MAN_DX, y: 766 + MAN_DY, tagX: -36, tagY: 4 },
 };
 
 function live(mask: number, id: LiveSegment) {
@@ -312,18 +312,28 @@ export function Schematic() {
         To Shakers
       </text>
 
-      {/* MGS → FL (F-3): Visio climb on right of MGS; Sergio: hopper bottom exit */}
-      <Pipe d={`M ${FL_X} ${F3_Y} L ${FL_X + 40} ${F3_Y}`} live={flLive && v("F-3")} />
-      <Pipe d={`M ${FL_X + 76} ${F3_Y} L ${MGS_OUT_DROP_X} ${F3_Y}`} live={flLive && v("F-3")} />
+      {/* MGS → FL (F-3): hopper bottom → climb → left to F-3 → FL column → up F-2/F-1.
+          Path order matches flow so live dashes run MGS → F3 → shakers (not toward MGS). */}
       <Pipe
-        d={`M ${MGS_OUT_DROP_X} ${F3_Y} L ${MGS_OUT_DROP_X} ${MGS_BOTTOM_Y + 28} L ${MGS_X} ${MGS_BOTTOM_Y + 28} L ${MGS_X} ${MGS_BOTTOM_Y}`}
+        d={`M ${MGS_X} ${MGS_BOTTOM_Y} L ${MGS_X} ${MGS_BOTTOM_Y + 28} L ${MGS_OUT_DROP_X} ${MGS_BOTTOM_Y + 28} L ${MGS_OUT_DROP_X} ${F3_Y}`}
         live={flLive && v("F-3")}
       />
+      <Pipe d={`M ${MGS_OUT_DROP_X} ${F3_Y} L ${FL_X + 76} ${F3_Y}`} live={flLive && v("F-3")} />
+      <Pipe d={`M ${FL_X + 40} ${F3_Y} L ${FL_X} ${F3_Y}`} live={flLive && v("F-3")} />
       <Tee x={FL_X} y={F3_Y} />
       <Tee x={MGS_OUT_DROP_X} y={F3_Y} />
       {/* Jump where MGS→FL climb crosses package→MGS inlet lateral */}
       <PipeJump x={MGS_OUT_DROP_X} y={MGS_IN_Y} axis="v" live={flLive && v("F-3")} />
       <ArrowFlag x={FL_X + 300} y={F3_Y} label="MGS to FL" dir="left" />
+      {/* Explicit flow chevrons: lateral toward FL, then up the riser to F-2 / F-1 */}
+      <polygon
+        points={`${FL_X + 200},${F3_Y} ${FL_X + 214},${F3_Y - 6} ${FL_X + 214},${F3_Y + 6}`}
+        className="fill-drawing-line"
+      />
+      <polygon
+        points={`${FL_X},${F3_Y - 36} ${FL_X - 6},${F3_Y - 22} ${FL_X + 6},${F3_Y - 22}`}
+        className="fill-drawing-line"
+      />
 
       {/* FL → MGS (F-4) */}
       <Pipe d={`M ${FL_X} ${F4_Y} L ${FL_X + 40} ${F4_Y}`} live={v("F-4")} />

@@ -256,12 +256,12 @@ export function MgsVessel({
       <text x={0} y={40} textAnchor="middle" className="fill-drawing-fg" fontSize={12} fontFamily="var(--font-sans)">
         *Rig MGS
       </text>
-      {/* F-4 FL to MGS — left (local y = F4_Y - MGS_Y) */}
+      {/* F-4 FL to MGS — left upper */}
+      <rect x={-62} y={-14} width={14} height={12} className="fill-drawing-steel stroke-drawing-line" strokeWidth={1} />
+      {/* D-6 — left lower */}
       <rect x={-62} y={34} width={14} height={12} className="fill-drawing-steel stroke-drawing-line" strokeWidth={1} />
-      {/* D-6 package inlet — left lower (local y = MGS_IN_Y - MGS_Y) */}
-      <rect x={-62} y={46} width={14} height={12} className="fill-drawing-steel stroke-drawing-line" strokeWidth={1} />
-      {/* MGS to FL — bottom hopper outlet */}
-      <rect x={-8} y={226} width={16} height={12} className="fill-drawing-steel stroke-drawing-line" strokeWidth={1} />
+      {/* MGS to FL — right */}
+      <rect x={48} y={34} width={14} height={12} className="fill-drawing-steel stroke-drawing-line" strokeWidth={1} />
     </g>
   );
 }
