@@ -1,6 +1,11 @@
 name: restore-build-critical
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "src/components/pid/symbols.tsx.gz.b64"
+      - "src/components/pid/schematic.tsx.gz.b64.*"
+      - ".github/workflows/restore-build-critical.yml"
 jobs:
   restore:
     runs-on: ubuntu-latest
@@ -8,25 +13,13 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Decode payloads to exact files
+      - name: Decode Cate pid UI payloads
         run: |
           node <<'JS'
           const fs = require("fs");
           const zlib = require("zlib");
           const crypto = require("crypto");
           const targets = [
-            {
-              path: "scripts/grok-pwa-shared.mjs",
-              parts: ["scripts/grok-pwa-shared.mjs.gz.b64.0", "scripts/grok-pwa-shared.mjs.gz.b64.1"],
-              len: 17665,
-              md5: "53e4f6d4ef4cea9c1b6258585745390e",
-            },
-            {
-              path: "src/components/pid/equipment.tsx",
-              parts: ["src/components/pid/equipment.tsx.gz.b64"],
-              len: 14422,
-              md5: "0a261150a3bd031163ab9860eac2130c",
-            },
             {
               path: "src/components/pid/symbols.tsx",
               parts: ["src/components/pid/symbols.tsx.gz.b64"],
@@ -35,7 +28,7 @@ jobs:
             },
             {
               path: "src/components/pid/schematic.tsx",
-              parts: ["src/components/pid/schematic.tsx.gz.b64.0", "src/components/pid/schematic.tsx.gz.b64.1"],
+              parts: ["src/components/pid/schematic.tsx.gz.b64.0", "src/components/pid/schematic.tsx.gz.b64.1", "src/components/pid/schematic.tsx.gz.b64.2", "src/components/pid/schematic.tsx.gz.b64.3", "src/components/pid/schematic.tsx.gz.b64.4", "src/components/pid/schematic.tsx.gz.b64.5", "src/components/pid/schematic.tsx.gz.b64.6"],
               len: 28176,
               md5: "e117a60535d03cdb98cfbbd1139423a8",
             },
@@ -59,7 +52,7 @@ jobs:
         run: |
           git config user.name "cedanosergio11"
           git config user.email "cedanosergio11@gmail.com"
-          git add scripts/grok-pwa-shared.mjs src/components/pid/equipment.tsx src/components/pid/symbols.tsx src/components/pid/schematic.tsx || true
+          git add src/components/pid/symbols.tsx src/components/pid/schematic.tsx
           if git diff --cached --quiet; then
             echo "no change"
           else
