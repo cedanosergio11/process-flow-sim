@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { memo, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import type { ValveKind } from "@/lib/sim/types";
 
@@ -19,7 +19,7 @@ export function DrawingDefs() {
   );
 }
 
-export function Pipe({
+export const Pipe = memo(function Pipe({
   d,
   live = false,
   size = "main",
@@ -54,11 +54,11 @@ export function Pipe({
       )}
     </g>
   );
-}
+});
 
-export function Tee({ x, y, size = "main" }: { x: number; y: number; size?: PipeSize }) {
+export const Tee = memo(function Tee({ x, y, size = "main" }: { x: number; y: number; size?: PipeSize }) {
   return <circle cx={x} cy={y} r={PIPE_W[size] / 2 + 0.2} className="pointer-events-none fill-drawing-line" />;
-}
+});
 
 export function Tag({
   x,
@@ -550,7 +550,7 @@ export function hoseZigzagD(
   return parts.join(" ");
 }
 
-export function Hose({
+export const Hose = memo(function Hose({
   d,
   live = false,
   size = "main",
@@ -562,7 +562,7 @@ export function Hose({
   muted?: boolean;
 }) {
   return <Pipe d={d} live={live} size={size} muted={muted} />;
-}
+});
 
 /** Semicircle jump where two pipes cross without connecting. */
 export function PipeJump({

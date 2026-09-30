@@ -160,7 +160,11 @@ export function Schematic() {
   const template = useSim((s) => s.template);
   const valves = useSim((s) => s.valves);
   const liveMask = useSim((s) => s.liveMask);
-  const pumps = useSim((s) => s.pumps);
+  // Bitmask of pump .on only — SPM edits must not redraw the whole PFD.
+  const pumpOnBits = useSim(
+    (s) =>
+      (s.pumps[0]!.on ? 1 : 0) | (s.pumps[1]!.on ? 2 : 0) | (s.pumps[2]!.on ? 4 : 0),
+  );
   const selected = useSim((s) => s.selected);
   const running = useSim((s) => s.running);
   const toggleValve = useSim((s) => s.toggleValve);
@@ -189,9 +193,9 @@ export function Schematic() {
   const dsLive = live(liveMask, "drillstring");
   const flLive = live(liveMask, "mgs-out");
   const c2Live = retLive && v("C-2");
-  const t1On = pumps[0]!.on && running;
-  const t2On = pumps[1]!.on && running;
-  const t3On = pumps[2]!.on && running;
+  const t1On = (pumpOnBits & 1) !== 0 && running;
+  const t2On = (pumpOnBits & 2) !== 0 && running;
+  const t3On = (pumpOnBits & 4) !== 0 && running;
   const hdrLeft = t1On || (v("S-1") && (t2On || t3On));
   const hdrMid = t2On || (v("S-1") && t1On) || (v("S-2") && t3On);
   const hdrRight = t3On || (v("S-2") && (t2On || (v("S-1") && t1On)));
@@ -244,9 +248,9 @@ export function Schematic() {
       <Skid x={d1 - 55} y={FM_LOOP_Y - 55} w={d6 - d1 + 130} h={150} title="FM-01" hatch />
 
       {/* ── Pumps → standpipe header ── */}
-      <Pipe d={`M ${P1} 92 L ${P1} ${SP_Y}`} live={pumps[0]!.on && running} />
-      <Pipe d={`M ${P2} 92 L ${P2} ${SP_Y}`} live={pumps[1]!.on && running} />
-      <Pipe d={`M ${P3} 92 L ${P3} ${SP_Y}`} live={pumps[2]!.on && running} />
+      <Pipe d={`M ${P1} 92 L ${P1} ${SP_Y}`} live={t1On} />
+      <Pipe d={`M ${P2} 92 L ${P2} ${SP_Y}`} live={t2On} />
+      <Pipe d={`M ${P3} 92 L ${P3} ${SP_Y}`} live={t3On} />
       <Tee x={P1} y={SP_Y} />
       <Tee x={P2} y={SP_Y} />
       <Tee x={P3} y={SP_Y} />
@@ -522,7 +526,7 @@ export function Schematic() {
       <PumpSymbol
         x={P1}
         y={76}
-        running={pumps[0]!.on}
+        running={((pumpOnBits & 1) !== 0)}
         tag="T1"
         selected={selected?.kind === "pump" && selected.id === "T1"}
         onClick={() => togglePump("T1")}
@@ -530,7 +534,7 @@ export function Schematic() {
       <PumpSymbol
         x={P2}
         y={76}
-        running={pumps[1]!.on}
+        running={((pumpOnBits & 2) !== 0)}
         tag="T2"
         selected={selected?.kind === "pump" && selected.id === "T2"}
         onClick={() => togglePump("T2")}
@@ -538,7 +542,7 @@ export function Schematic() {
       <PumpSymbol
         x={P3}
         y={76}
-        running={pumps[2]!.on}
+        running={((pumpOnBits & 4) !== 0)}
         tag="T3"
         selected={selected?.kind === "pump" && selected.id === "T3"}
         onClick={() => togglePump("T3")}
