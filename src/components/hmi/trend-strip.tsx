@@ -5,8 +5,7 @@ export function TrendStrip() {
   const qFm = useSim((s) => s.qFm);
   const pWh = useSim((s) => s.pWh);
   const dens = useSim((s) => s.densityPpg);
-  const choke = useSim((s) => Math.max(s.ckA, s.ckB, s.ckM));
-  const seed = { t: 0, q: qFm, p: pWh, dens, choke };
+  const seed = { t: 0, q: qFm, p: pWh, dens, choke: 0 };
   const data = trend.length > 2 ? trend : [seed, { ...seed, t: 1 }];
 
   return (
