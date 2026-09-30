@@ -120,9 +120,7 @@ function ChokePanel() {
 }
 
 function ChokeDiff() {
-  const dP = useSim(
-    (s) => liveInt(s.pWh, s.simTime, 1.1, 1.5) - liveInt(s.pChokeDown, s.simTime, 3.2, 0.8),
-  );
+  const dP = useSim((s) => Math.round(s.pWh) - Math.round(s.pChokeDown));
   return (
     <div className="rounded-md border border-border bg-elevated p-2.5 shadow-[var(--shadow-border)]">
       <div className="mb-1.5 flex justify-between text-[11px] text-muted">
@@ -466,8 +464,8 @@ function PumpPanel() {
       <Separator />
       <div>
         <p className="mb-1 text-xs tracking-wide text-faint uppercase">Event log</p>
-        <ul className="max-h-40 space-y-1 overflow-y-auto font-mono text-xs text-muted">
-          {[...log].reverse().map((e, i) => (
+        <ul className="flex max-h-40 flex-col-reverse gap-1 overflow-y-auto font-mono text-xs text-muted">
+          {log.map((e, i) => (
             <li key={`${e.t}-${i}`}>{e.msg}</li>
           ))}
         </ul>
