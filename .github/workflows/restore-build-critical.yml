@@ -13,26 +13,13 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Decode Cate pid UI payloads
+      - name: Decode pid UI payloads (v1.4.4.0 perf)
         run: |
           node <<'JS'
           const fs = require("fs");
           const zlib = require("zlib");
           const crypto = require("crypto");
-          const targets = [
-            {
-              path: "src/components/pid/symbols.tsx",
-              parts: ["src/components/pid/symbols.tsx.gz.b64"],
-              len: 22269,
-              md5: "71cef28c679e2947c9e9ea45fccf9c12",
-            },
-            {
-              path: "src/components/pid/schematic.tsx",
-              parts: ["src/components/pid/schematic.tsx.gz.b64.0", "src/components/pid/schematic.tsx.gz.b64.1", "src/components/pid/schematic.tsx.gz.b64.2", "src/components/pid/schematic.tsx.gz.b64.3", "src/components/pid/schematic.tsx.gz.b64.4", "src/components/pid/schematic.tsx.gz.b64.5", "src/components/pid/schematic.tsx.gz.b64.6"],
-              len: 28176,
-              md5: "e117a60535d03cdb98cfbbd1139423a8",
-            },
-          ];
+          const targets = [{"path": "src/components/pid/symbols.tsx", "parts": ["src/components/pid/symbols.tsx.gz.b64"], "len": 22334, "md5": "ccf59cac9a0ab655ecdb2e560c859d9c"}, {"path": "src/components/pid/schematic.tsx", "parts": ["src/components/pid/schematic.tsx.gz.b64.0", "src/components/pid/schematic.tsx.gz.b64.1", "src/components/pid/schematic.tsx.gz.b64.2", "src/components/pid/schematic.tsx.gz.b64.3", "src/components/pid/schematic.tsx.gz.b64.4", "src/components/pid/schematic.tsx.gz.b64.5", "src/components/pid/schematic.tsx.gz.b64.6"], "len": 28349, "md5": "3911ca5b3d76a3173ceab8f609d14726"}];
           for (const t of targets) {
             if (!t.parts.every((p) => fs.existsSync(p))) {
               console.log("skip missing", t.path);
@@ -56,6 +43,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "no change"
           else
-            git commit -m "feat(pid): ISA bubbles, flow chevrons, line-class tags, drawing legend (Cate)"
+            git commit -m "perf(pid): memo Pipe/Tee/Hose + pumpOnBits schematic (v1.4.4.0)"
             git push
           fi
