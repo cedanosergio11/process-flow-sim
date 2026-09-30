@@ -1,4 +1,4 @@
-export const APP_VERSION = "1.4.3.0";
+export const APP_VERSION = "1.4.4.0";
 
 export type ChangeEntry = {
   version: string;
@@ -8,6 +8,17 @@ export type ChangeEntry = {
 };
 
 export const CHANGELOG: ChangeEntry[] = [
+  {
+    version: "1.4.4.0",
+    date: "2026-09-29",
+    title: "Sim loop + PFD render cost",
+    notes: [
+      "UI flush back to 10 Hz (was 30). Tab-hidden pauses RAF and pipe dash animations without thrashing the paused class.",
+      "flushUi publishes telem at display quanta and skips the React store write when nothing changed — steady circulation no longer repaints chips every frame.",
+      "PFD subscribes to pump on/off bits only (SPM edits no longer redraw the sheet). Pipe/Tee/Hose memoized.",
+      "Stop flow no longer clears the ESD latch (startFlow / resetEsd / resetLineup still do).",
+    ],
+  },
   {
     version: "1.4.3.0",
     date: "2026-09-16",
