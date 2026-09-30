@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.4.0 — 2026-09-29
+
+Sim loop + PFD render cost.
+
+- UI flush 10 Hz; hidden-tab pause without class thrash.
+- flushUi display quanta + skip noop store writes.
+- PFD pump on/off bits; memoized Pipe/Tee/Hose.
+- Stop flow keeps ESD latch.
+
 ## 1.4.1.0 — 2026-08-26
 
 Standpipe, MGS, and fit-view.
@@ -77,38 +86,3 @@ Standpipe, trip tank, flow line.
 - Rig pumps, standpipe manifold, SPP bleed off, drill string, kill drop.
 - Trip-tank fill-up: hose → spec break → E-3 → E-2 check → E-1 strainer into the RCD.
 - Rig flow line header with To Shakers, three laterals, D-5, and C-2.
-
-## 1.3.0.0 — 2026-08-26
-
-PFD templates.
-
-- Drawing simplified to the process flow diagram.
-- Toggle Well control (manifold via E-4) vs Kill line (into the BOP spool).
-- E-5 moves with the template. C-8 removed.
-
-## 1.2.0.0 — 2026-08-26
-
-Source-sheet topology.
-
-- Dual choke: Chk A over Chk B, two header blocks, C-3/C-4/C-6/C-7 on the legs.
-- C-5 and C-8 equalize / bypass. C-7 is Ck-B downstream.
-- FM-01 Coriolis loop: D-1 drain, D-2 meter outlet, D-3 bypass, D-4 package outlet.
-- MGS: dome, cone, manway, inlet check, bottom loop, flare stack.
-
-## 1.1.0.0 — 2026-08-26
-
-P&ID drawing pass.
-
-- Paper-style drawing sheet so process lines read against a light field.
-- One pipe class system (main / branch / fill). Solid lines with a live overlay.
-- RCD on top of the annular, with fill-up from the trip tank.
-- BOP stack: annular, three rams, drilling spool, wellhead. Kill line into the spool.
-- Rig choke manifold as a two-leg 10K well-control manifold.
-- Well / client names removed.
-
-## 1.0.0.0 — 2026-08-26
-
-Initial dual-choke MPD simulator.
-
-- Start/stop circulation, clickable valves, adjustable chokes.
-- Coriolis FM-01 readings and WHP / density trends.
